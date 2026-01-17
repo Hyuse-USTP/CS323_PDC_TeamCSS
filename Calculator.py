@@ -1,8 +1,21 @@
-#Calculator Made by Team CSS
+# Calculator Made by Team CSS
+
+def get_input(text):
+    while (True):
+        try:
+            num = float(input(text))
+            break
+        except(TypeError, ValueError):
+            pass    
+    return num
 
 def addition(num1, num2):
     sum = num1 + num2
     print(f"\n\nThe sum of {num1} and {num2} is {sum}.\n\n")
+
+def subtraction(num1, num2):
+    difference = num1 - num2
+    print(f"\n\nThe difference of {num1} and {num2} is {difference}.\n\n")
 
 while(True):
     print("This is a simple floating point integer calculator")
@@ -11,20 +24,26 @@ while(True):
     print("2. Subtract")
     print("3. Multiply")
     print("4. Divide")
-    choice = int(input("\n\nWhat would you like to do? Input the number of the operation: "))
+    print("5. Exit")
+    choice = get_input("\nWhat would you like to do? Input the number of the operation: ")
 
     match choice:
         case 1:
-            num1 = float(input("Input the first number: "))
-            num2 = float(input("Input the second number: "))
+            num1 = get_input("Input the first number: ")
+            num2 = get_input("Input the second number: ")
             addition(num1, num2)
             continue
         case 2:
+            num1 = get_input("Input the first number: ")
+            num2 = get_input("Input the second number: ")
+            subtraction(num1, num2)
             continue
         case 3:
             continue
         case 4:
             continue
+        case 5:
+            break
         case _:
             print("Choice not found. Try again")
             continue
