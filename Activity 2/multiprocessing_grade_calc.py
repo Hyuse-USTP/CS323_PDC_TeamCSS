@@ -11,7 +11,7 @@ def input_grades(num_students, num_subjects):
         while True:
             try:
                 user_input = input(f"Student {i + 1}: Enter {num_subjects} grades: ").strip()
-                grades = [float(g) for g in user_input.split()]
+                grades = [float(g) for g in user_input.replace(',', ' ').split()]
                 
                 if len(grades) != num_subjects:
                     print(f"Error: You entered {len(grades)} grades. Please enter exactly {num_subjects}.")

@@ -1,52 +1,72 @@
 import threading
 import time
 
-FINAL_GWA = 0
-LOCK = threading.Lock()
+# 1. Reuse the Input Logic (Same as Multiprocessing for fairness)
+def input_grades(num_students, num_subjects):
+    matrix = []
+    print(f"\n--- Grade Entry Phase ({num_students} students) ---")
+    for i in range(num_students):
+        while True:
+            try:
+                user_input = input(f"Student {i + 1}: Enter {num_subjects} grades (space separated): ").strip()
+                grades = [float(g) for g in user_input.split()]
+                if len(grades) != num_subjects:
+                    print(f"Error: Entered {len(grades)} grades. Need {num_subjects}.")
+                    continue
+                matrix.append(grades)
+                break
+            except ValueError:
+                print("Invalid input.")
+    return matrix
 
-def compute_gwa(grades, thread_no):
-    global FINAL_GWA
+# 2. The Worker Function (Target for Threads)
+def compute_gwa(grades, student_id):
+    # Simulate a tiny delay so you can see threads interleaving (optional but helpful)
+    time.sleep(0.001) 
     
-    gwa = sum(grades) / len(grades)
+    if not grades:
+        gwa = 0.0
+    else:
+        gwa = sum(grades) / len(grades)
     
-    print(f"[Thread {thread_no}] Calculated GWA: {gwa}")
-
-    with LOCK:
-        FINAL_GWA = gwa
-
-# Ensure the input is a number
-def get_number(input_text):
-    while True:
-        try:
-            number = int(input(input_text))
-            break
-        except (TypeError, ValueError):
-            pass
-    return number
+    # Print immediately to show concurrency
+    print(f"[Thread-{student_id}] Student {student_id} GWA: {gwa:.2f}")
 
 def main():
-    grades_list = [] 
-
+    print("Multithreading Grade Calculator")
     
-
-    grades_count = get_number("Number of grades: ")
-    threads = []
-    
-    for i in range(grades_count):
-        grades_list.append(get_number("Enter grade: "))
-        t = threading.Thread(target=compute_gwa, args=(grades_list, i+1,))
-        threads.append(t)
-    start = time.time()
-    
-    for t in threads:
-        t.start()
-
-    for t in threads:
-        t.join()
-    end = time.time()
-
-    print("Final GWA:", FINAL_GWA) 
-    print(f"Time Taken: {end - start:.6f} seconds")
+    try:
+        n_students = int(input("How many students? "))
+        n_subjects = int(input("How many subjects per student? "))
+        
+        # Phase 1: Input
+        student_matrix = input_grades(n_students, n_subjects)
+        
+        print(f"\n--- Threading Phase (Simultaneous) ---")
+        threads = []
+        
+        # Phase 2: Create Threads (1 Thread per Student)
+        # This matches your Multiprocessing logic: 1 Core per Student
+        for i, student_grades in enumerate(student_matrix):
+            t = threading.Thread(target=compute_gwa, args=(student_grades, i+1))
+            threads.append(t)
+            
+        start = time.time()
+        
+        # Start all threads
+        for t in threads:
+            t.start()
+            
+        # Wait for all to finish
+        for t in threads:
+            t.join()
+            
+        end = time.time()
+        
+        print(f"\nTime Taken: {end - start:.6f} seconds")
+        
+    except ValueError:
+        print("Invalid input.")
 
 if __name__ == "__main__":
     main()
