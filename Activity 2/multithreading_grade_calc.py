@@ -4,12 +4,12 @@ import time
 FINAL_GWA = 0
 LOCK = threading.Lock()
 
-def compute_gwa(grades):
+def compute_gwa(grades, thread_no):
     global FINAL_GWA
     
     gwa = sum(grades) / len(grades)
     
-    print(f"[Thread] Calculated GWA: {gwa}")
+    print(f"[Thread {thread_no}] Calculated GWA: {gwa}")
 
     with LOCK:
         FINAL_GWA = gwa
@@ -32,11 +32,12 @@ def main():
     grades_count = get_number("Number of grades: ")
     threads = []
     
-    for _ in range(grades_count):
+    for i in range(grades_count):
         grades_list.append(get_number("Enter grade: "))
-        t = threading.Thread(target=compute_gwa, args=(grades_list,))
+        t = threading.Thread(target=compute_gwa, args=(grades_list, i+1,))
         threads.append(t)
     start = time.time()
+    
     for t in threads:
         t.start()
 
