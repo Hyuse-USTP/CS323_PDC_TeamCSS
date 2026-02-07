@@ -2,6 +2,7 @@ import multiprocessing
 import os
 import sys
 from collections import Counter
+import time
 
 def input_grades(num_students, num_subjects):
     matrix = []
@@ -54,6 +55,7 @@ def main():
             
             # 1. Input Phase
             student_matrix = input_grades(n_students, n_subjects)
+            start = time.time()
             
             print(f"\n--- Processing Phase ({n_cores} Cores) ---")
             print(f"Main Process ID: {os.getpid()}")
@@ -61,13 +63,16 @@ def main():
             # 2. Execution (Parallelism)
             with multiprocessing.Pool(processes=n_cores) as pool:
                 worker_logs = pool.map(compute_gwa, student_matrix, chunksize=1)
-                
+            
+            end = time.time()
+
             # 3. Summary Phase
             print("\n--- Workload Summary ---")
             workload_count = Counter(worker_logs)
             for pid, count in workload_count.items():
                 print(f"Worker PID {pid} handled {count} calculation(s).")
-                
+            
+            print(f"Time Taken: {end - start:.6f} seconds")
             print("\n--- Batch Complete ---")
             
             # Check if user wants to continue
