@@ -12,7 +12,7 @@
 
 4. What happens if you input a large number of grades (e.g., 1000)? Which method is faster and why?
 
-    If I input 1000 grades using the same approach of "1 worker per grade", the difference in performance becomes clear and catastrophic. Multiprocessing will likely crash the maching or either execute extremely slowly because the operating system cannot efficiently handle the suddent creation of 1000 separate processes.
+    If I input 1000 grades using the same approach of "1 worker per grade", the difference in performance becomes clear and catastrophic. Multiprocessing will likely crash the machine or either execute extremely slowly because the operating system cannot efficiently handle the suddent creation of 1000 separate processes.
     Multithreading is faster in this specific scenario because creating 1000 threads is much 'cheaper' for the system than creating 1000 processes.
 
 5. Which method is better for CPU-bound tasks and which for I/O-bound
@@ -20,6 +20,6 @@ tasks?
 
     Multiprocessing is the only valid choice for CPU-bound tasks as heavy computations like matrix multiplication, video rendering, or complex data analysis bypasses the GIL. This allows the code to run on multiple CPU cores simultaneously achieving true parallelism. Multithreading is superior for I/O-bound tasks as waiting operations like downloading files, querying a database, or getting user input. Since the CPU just sits idly while waiting for the tasks to finish.
 
-6. How did your group apply creative coding or algorithmic solutions in this lab?4
+6. How did your group apply creative coding or algorithmic solutions in this lab?
 
     We applied creative coding by rejecting the inefficient method of creating a new process for every single grade. We restructured the data into student-level batches and assigned one process to handle a full list of grades. For multithreading we implemented a responsive system where every new grade input immediately creates a separate thread to compute the GWA. This contrast demonstrated that threads are lightweight enough to spawn individually for rapid tasks unlike the heavier processes.
