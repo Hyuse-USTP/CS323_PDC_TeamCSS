@@ -4,7 +4,7 @@
 
 2. Compare execution times between multithreading and multiprocessing.
 
-
+    In almost every scenario involving lightweight tasks, multithreading significantly outperforms multiprocessing regarding the execution time. The difference is cause by an "overhead" thats an extra computing resources required to manage the code. Threads share the same memory space and belong to a single process, meaning they can be created and destroyed almost instantly. In Multiprocessing however, requires the operating system to allocate entirely new memory blocks and start a fresh instance of python interpreter for every single process.
 
 3. Can Python handle true parallelism using threads? Why or why not?
 
