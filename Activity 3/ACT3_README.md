@@ -3,10 +3,11 @@
     * Data parallelism is when one operation is performed on multiple objects simultaneously. This is demonstrated in the Part B of the lab activity, where a single payroll function is performed on five employees at once. The benefits of this are similar to task parallelism, where the program doesn't have to wait for the function to finish executing on one employee before proceeding to the next, therefore minimizing the time of execution.
 
 2. Explain how concurrent.futures managed execution, including submit(), map(), and Future objects. Discuss the purpose of with when creating an Executor.
-    * test
+    * The module concurrent.futures provides high-level functions for asynchronously executing callables via an Executor. Utilizing the with statement to initialize an Executor is essential for robust resource management, as it automatically triggers a shutdown and joins threads or processes once the block concludes. For task execution, submit() provides granular control by returning Future objects, which are proxies for pending results that allow for status checking and asynchronous retrieval. Whereas map() facilitates efficient batch processing of iterables while maintaining strict result ordering. 
 
-3. Analyze ThreadPoolExecutor execution in relation to the GIL and CPU cores. Did
-true parallelism occur?
+3. Analyze ThreadPoolExecutor execution in relation to the GIL and CPU cores. Did true parallelism occur?
+    *
+    
 4. Explain why ProcessPoolExecutor enables true parallelism, including memory
 space separation and GIL behavior.
 5. Evaluate scalability if the system increases from 5 to 10,000 employees. Which
