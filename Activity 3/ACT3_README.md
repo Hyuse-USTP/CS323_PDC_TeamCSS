@@ -6,8 +6,8 @@
     * The module concurrent.futures provides high-level functions for asynchronously executing callables via an Executor. Utilizing the with statement to initialize an Executor is essential for robust resource management, as it automatically triggers a shutdown and joins threads or processes once the block concludes. For task execution, submit() provides granular control by returning Future objects, which are proxies for pending results that allow for status checking and asynchronous retrieval. Whereas map() facilitates efficient batch processing of iterables while maintaining strict result ordering. 
 
 3. Analyze ThreadPoolExecutor execution in relation to the GIL and CPU cores. Did true parallelism occur?
-    *
-    
+    * True parallelism did not occur because what ThreadPoolExecutor provides is concurrency, not parallelism. ThreadPoolExecutor only executes using one core at a time, and with GIL, other threads must wait if one thread is currently running. Parallelism only happens when multiple cores are working simultaneously, which is made possible via ProcessPoolExecutor.
+
 4. Explain why ProcessPoolExecutor enables true parallelism, including memory
 space separation and GIL behavior.
 5. Evaluate scalability if the system increases from 5 to 10,000 employees. Which
