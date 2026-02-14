@@ -47,7 +47,7 @@ def main():
         
         # Phase 2: Create Threads (1 Thread per Student)
         for i, student_grades in enumerate(student_matrix):
-            t = threading.Thread(target=compute_gwa, args=(student_grades, i+1))
+            t = threading.Thread(target=compute_gwa, args=(student_grades, i+1))git 
             threads.append(t)
             
         start = time.time()
