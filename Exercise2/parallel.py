@@ -5,18 +5,18 @@ import threading
 def cook_rice(results):
     start = time.time()
     print("  -> Starting to cook rice...")
-    for i in range(1, 41): # 40 * 0.5 = 20 seconds
-        time.sleep(0.5)
-        print(f"[Rice] Still cooking... ({i*0.5:.1f}s / 20.0s)")
+    for i in range(1, 21): 
+        time.sleep(1)
+        print(f"[Rice] Still cooking... ({i}m / 20m)")
     print("  -> Rice is done.")
     results['rice'] = time.time() - start
 
 def cook_egg(results):
     start = time.time()
     print("  -> Starting to cook egg...")
-    for i in range(1, 11): # 10 * 0.5 = 5 seconds
-        time.sleep(0.5)
-        print(f"[Egg]  Still cooking... ({i*0.5:.1f}s / 5.0s)")
+    for i in range(1, 7): 
+        time.sleep(1)
+        print(f"[Egg]  Still cooking... ({i}m / 5m)")
     print("  -> Egg is done.")
     results['egg'] = time.time() - start
 
@@ -46,6 +46,6 @@ if __name__ == "__main__":
     print("\n" + "="*40)
     print("PARALLEL EXECUTION REPORT")
     print("="*40)
-    print(f"Rice Cooking Time:{rice_time:.4f} seconds")
-    print(f"Egg Cooking Time:{egg_time:.4f} seconds")
-    print(f"Total Parallel Time:{par_time:.4f} seconds")
+    print(f"Rice Cooking Time:{rice_time:.4f} minutes")
+    print(f"Egg Cooking Time:{egg_time:.4f} minutes")
+    print(f"Total Parallel Time:{par_time:.4f} minutes")
